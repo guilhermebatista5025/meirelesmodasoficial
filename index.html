@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meireles Modas Oficial | Moda Masculina & Camisas de Time</title>
+  
+  <!-- Meta Tags para SEO -->
+  <meta name="description" content="A melhor loja de moda masculina, streetwear premium e camisas de time oficiais. Compre online e finalize de forma rápida e segura via WhatsApp. Entregas rápidas!">
+  <meta name="keywords" content="moda masculina, camisas de time, futebol, streetwear, camiseta oversized, camisa de linho, corta-vento, meireles modas">
+  <meta name="author" content="Meireles Modas Oficial">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Meireles Modas Oficial | Moda Masculina & Camisas de Time">
+  <meta property="og:description" content="A melhor loja de moda masculina, streetwear premium e camisas de time oficiais. Envio para todo o Brasil.">
+  <meta property="og:image" content="assets/images/hero_banner.png">
+  
+  <!-- Google Fonts & Remix Icons para Visual Premium -->
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
+  
+  <!-- Arquivo de Estilização Principal -->
+  <link rel="stylesheet" href="index.css?v=2.0">
+</head>
+<body>
+
+  <!-- ==========================================
+       ANNOUNCEMENT BAR & TICKER
+       ========================================== -->
+  <div class="announcement-bar" id="announcement-bar">
+    <div class="ticker-wrap">
+      <div class="ticker">
+        <div class="ticker-item"><i class="ri-truck-line"></i> FRETE GRÁTIS PARA COMPRAS ACIMA DE <span>R$ 250</span></div>
+        <div class="ticker-item"><i class="ri-coupon-3-line"></i> USE O CUPOM <span>MEIRELES10</span> E GANHE 10% OFF</div>
+        <div class="ticker-item"><i class="ri-whatsapp-line"></i> COMPRE CONVERSANDO COM NOSSOS VENDEDORES</div>
+        <div class="ticker-item"><i class="ri-shield-check-line"></i> PRODUTOS COM GARANTIA E QUALIDADE PREMIUM</div>
+        <!-- Duplicar itens para scroll contínuo e suave -->
+        <div class="ticker-item"><i class="ri-truck-line"></i> FRETE GRÁTIS PARA COMPRAS ACIMA DE <span>R$ 250</span></div>
+        <div class="ticker-item"><i class="ri-coupon-3-line"></i> USE O CUPOM <span>MEIRELES10</span> E GANHE 10% OFF</div>
+        <div class="ticker-item"><i class="ri-whatsapp-line"></i> COMPRE CONVERSANDO COM NOSSOS VENDEDORES</div>
+        <div class="ticker-item"><i class="ri-shield-check-line"></i> PRODUTOS COM GARANTIA E QUALIDADE PREMIUM</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       HEADER & NAVBAR
+       ========================================== -->
+  <header id="main-header">
+    <div class="container navbar">
+      <!-- Logo da Marca -->
+      <a href="index.html" class="logo-container" id="brand-logo" aria-label="Meireles Modas Home">
+        <svg class="logo-icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="50" cy="50" r="46" stroke="url(#logo-border-grad)" stroke-width="6" fill="#0D0D10" />
+          <!-- Letra M estilizada inspirada na logo fornecida -->
+          <path d="M28 65V35L42 50L50 42L58 50L72 35V65" stroke="url(#m-grad)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" />
+          <!-- Onda Azul (Splash Wave) da logo original -->
+          <path d="M30 52C40 42 48 48 55 54C62 60 70 52 75 42" stroke="#00A2E8" stroke-width="6" stroke-linecap="round" fill="none" />
+          <defs>
+            <linearGradient id="logo-border-grad" x1="0" y1="0" x2="100" y2="100">
+              <stop offset="0%" stop-color="#FCD116" />
+              <stop offset="50%" stop-color="#00A859" />
+              <stop offset="100%" stop-color="#00A2E8" />
+            </linearGradient>
+            <linearGradient id="m-grad" x1="0" y1="0" x2="100" y2="100">
+              <stop offset="0%" stop-color="#FCD116" />
+              <stop offset="100%" stop-color="#00A859" />
+            </linearGradient>
+          </defs>
+        </svg>
+        <div class="logo-text">
+          <span class="brand-title">Meireles</span>
+          <span class="brand-accent">Modas Oficial</span>
+        </div>
+      </a>
+
+      <!-- Menu de Navegação -->
+      <nav id="nav-navigation">
+        <ul class="nav-links">
+          <li><a href="index.html" class="active">Início</a></li>
+          <li><a href="loja.html">Loja</a></li>
+          <li><a href="#testimonials">Avaliações</a></li>
+        </ul>
+      </nav>
+
+      <!-- Ações do Header (Busca, Tema e Carrinho) -->
+      <div class="nav-actions">
+        <div class="search-box" onclick="window.location.href='loja.html'">
+          <i class="ri-search-line search-icon"></i>
+          <input type="text" id="search-input" class="search-input" placeholder="Buscar camisas, t-shirts..." readonly aria-label="Buscar produtos">
+        </div>
+        
+        <button id="theme-toggle" class="nav-btn" aria-label="Alternar Tema Claro/Escuro">
+          <i class="ri-sun-line" id="theme-icon"></i>
+        </button>
+        
+        <button id="cart-toggle" class="nav-btn" aria-label="Abrir Carrinho de Compras">
+          <i class="ri-shopping-bag-line"></i>
+          <span id="cart-badge-count" class="cart-count">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Elemento Decorativo de Brilho de Fundo -->
+  <div class="glow-bg" style="top: 15%; right: 10%;"></div>
+
+  <!-- ==========================================
+       MAIN CONTENT
+       ========================================== -->
+  <main>
+    
+    <!-- ==========================================
+         HERO SECTION (BANNER PRINCIPAL)
+         ========================================== -->
+    <section class="container hero-section" id="hero">
+      <div class="hero-banner" style="background-image: url('assets/images/hero_banner.png');">
+        <div class="hero-content">
+          <div class="hero-tag">
+            <i class="ri-vip-crown-line"></i> Qualidade e Caimento Perfeitos
+          </div>
+          <h1 class="hero-title">
+            Estilo Urbano & <br>
+            <span class="highlight-grad">Mantos de Time</span>
+          </h1>
+          <p class="hero-desc">
+            A Meireles Modas Oficial traz o melhor do streetwear masculino, camisas de linho premium e mantos de times oficiais para você se destacar em qualquer lugar.
+          </p>
+          <div class="hero-buttons">
+            <a href="loja.html" class="btn-primary">
+              <i class="ri-shopping-cart-2-line"></i> Ir para a Loja
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         BENEFITS BAR (BARRA DE BENEFÍCIOS)
+         ========================================== -->
+    <section class="benefits-bar">
+      <div class="container benefits-grid">
+        <div class="benefit-card">
+          <div class="benefit-icon">
+            <i class="ri-truck-line"></i>
+          </div>
+          <div>
+            <h3 class="benefit-title">Entrega Expressa</h3>
+            <p class="benefit-desc">Receba no conforto de casa</p>
+          </div>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-icon">
+            <i class="ri-whatsapp-line"></i>
+          </div>
+          <div>
+            <h3 class="benefit-title">Compra no WhatsApp</h3>
+            <p class="benefit-desc">Atendimento humanizado rápido</p>
+          </div>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-icon">
+            <i class="ri-loop-left-line"></i>
+          </div>
+          <div>
+            <h3 class="benefit-title">Facilidade na Troca</h3>
+            <p class="benefit-desc">Garantia total de satisfação</p>
+          </div>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-icon">
+            <i class="ri-shield-check-line"></i>
+          </div>
+          <div>
+            <h3 class="benefit-title">Qualidade Garantida</h3>
+            <p class="benefit-desc">Tecidos e costuras premium</p>
+          </div>
+        </div>
+        <!-- Duplicar itens para scroll contínuo e perfeito -->
+        <div class="benefit-card">
+          <div class="benefit-icon">
+            <i class="ri-truck-line"></i>
+          </div>
+          <div>
+            <h3 class="benefit-title">Entrega Expressa</h3>
+            <p class="benefit-desc">Receba no conforto de casa</p>
+          </div>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-icon">
+            <i class="ri-whatsapp-line"></i>
+          </div>
+          <div>
+            <h3 class="benefit-title">Compra no WhatsApp</h3>
+            <p class="benefit-desc">Atendimento humanizado rápido</p>
+          </div>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-icon">
+            <i class="ri-loop-left-line"></i>
+          </div>
+          <div>
+            <h3 class="benefit-title">Facilidade na Troca</h3>
+            <p class="benefit-desc">Garantia total de satisfação</p>
+          </div>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-icon">
+            <i class="ri-shield-check-line"></i>
+          </div>
+          <div>
+            <h3 class="benefit-title">Qualidade Garantida</h3>
+            <p class="benefit-desc">Tecidos e costuras premium</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         CATEGORIES GRID (CATEGORIAS EM DESTAQUE)
+         ========================================== -->
+    <section class="container" id="categories">
+      <div class="section-header">
+        <div class="section-title-wrap">
+          <span class="section-tag">Coleções exclusivas</span>
+          <h2 class="section-title">Navegar por Categorias</h2>
+        </div>
+        <a href="loja.html" style="font-size:0.95rem; font-weight:700; color:var(--brand-blue); display:flex; align-items:center; gap:4px;">
+          Ver Tudo <i class="ri-arrow-right-line"></i>
+        </a>
+      </div>
+      
+      <div class="categories-grid">
+        <a href="loja.html?cat=times" class="category-card">
+          <img class="category-img" src="assets/images/jersey_brasil.png" alt="Camisas de Time">
+          <div class="category-info">
+            <h3 class="category-name">Camisas de Time</h3>
+            <span class="category-count">Os Mantos mais Procurados <i class="ri-arrow-right-line"></i></span>
+          </div>
+        </a>
+        
+        <a href="loja.html?cat=streetwear" class="category-card">
+          <img class="category-img" src="assets/images/streetwear_oversized.png" alt="Moda Streetwear">
+          <div class="category-info">
+            <h3 class="category-name">Streetwear</h3>
+            <span class="category-count">Oversized & Corta Vento <i class="ri-arrow-right-line"></i></span>
+          </div>
+        </a>
+        
+        <a href="loja.html?cat=moda" class="category-card">
+          <img class="category-img" src="assets/images/linen_shirt.png" alt="Moda Masculina Casual">
+          <div class="category-info">
+            <h3 class="category-name">Moda Casual</h3>
+            <span class="category-count">Camisas de Linho Slim <i class="ri-arrow-right-line"></i></span>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <!-- Elemento Decorativo de Brilho de Fundo -->
+    <div class="glow-bg" style="bottom: 30%; left: 5%;"></div>
+
+    <!-- ==========================================
+         PRODUCTS GRID & SHOPPING AREA
+         ========================================== -->
+    <section class="container shop-section" id="shop">
+      <div class="section-header" style="justify-content: center; text-align: center; margin-bottom: 36px;">
+        <div class="section-title-wrap" style="align-items: center;">
+          <span class="section-tag">Coleção Lançamentos</span>
+          <h2 class="section-title">Lançamentos em Destaque</h2>
+          <p style="color:var(--text-secondary); margin-top:8px; font-size:0.95rem;">Passe o mouse na roupa para ver os detalhes da parte traseira!</p>
+        </div>
+      </div>
+
+      <!-- Grid de Produtos Dinâmico -->
+      <div class="products-grid" id="products-grid">
+        <!-- Renderizado dinamicamente via script.js -->
+      </div>
+      
+      <div style="text-align: center; margin-top: 50px;">
+        <a href="loja.html" class="btn-secondary" style="padding: 16px 40px; font-weight:700;">
+          <i class="ri-store-2-line"></i> Visitar Loja Completa
+        </a>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         TESTIMONIALS SECTION (DEPOIMENTOS)
+         ========================================== -->
+    <section class="testimonials-section" id="testimonials">
+      <div class="container">
+        <div class="section-header" style="justify-content: center; text-align: center; margin-bottom: 50px;">
+          <div class="section-title-wrap" style="align-items: center;">
+            <span class="section-tag" style="color: var(--brand-yellow);">Opinião dos Clientes</span>
+            <h2 class="section-title">Quem Compra, Aprova!</h2>
+          </div>
+        </div>
+
+        <div class="testimonials-grid">
+          <div class="testimonial-card">
+            <div class="stars-row">
+              <i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i>
+            </div>
+            <p class="testimonial-text">
+              "A camisa de time do Brasil tem uma qualidade espetacular, o tecido é muito confortável e idêntico ao oficial. O atendimento no WhatsApp foi excelente!"
+            </p>
+            <div class="customer-info">
+              <img class="customer-avatar" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=100&q=80" alt="Avatar Lucas Silva">
+              <div>
+                <h4 class="customer-name">Lucas Silva</h4>
+                <span class="customer-verify"><i class="ri-checkbox-circle-fill"></i> Cliente Verificado</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="stars-row">
+              <i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i>
+            </div>
+            <p class="testimonial-text">
+              "Comprei a camiseta oversized preta e a corta-vento. O caimento é incrível, não desbota na lavagem e o visual street é sensacional. Recomendo muito!"
+            </p>
+            <div class="customer-info">
+              <img class="customer-avatar" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&q=80" alt="Avatar Gabriel Meireles">
+              <div>
+                <h4 class="customer-name">Gabriel Santos</h4>
+                <span class="customer-verify"><i class="ri-checkbox-circle-fill"></i> Cliente Verificado</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="stars-row">
+              <i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i>
+            </div>
+            <p class="testimonial-text">
+              "A camisa de linho ficou perfeita em mim. Usei num casamento na praia e choveram elogios. Envio super rápido e facilidade de pagar no PIX pelo WhatsApp!"
+            </p>
+            <div class="customer-info">
+              <img class="customer-avatar" src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=100&q=80" alt="Avatar Mateus Ramos">
+              <div>
+                <h4 class="customer-name">Mateus Ramos</h4>
+                <span class="customer-verify"><i class="ri-checkbox-circle-fill"></i> Cliente Verificado</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+
+  </main>
+
+  <!-- ==========================================
+       FOOTER (RODAPÉ)
+       ========================================== -->
+  <footer id="main-footer">
+    <div class="container footer-grid">
+      <!-- Coluna Sobre -->
+      <div class="footer-col-about">
+        <a href="index.html" class="footer-logo">
+          <svg class="logo-icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 38px; height: 38px;">
+            <circle cx="50" cy="50" r="46" stroke="url(#footer-logo-border)" stroke-width="6" fill="#0D0D10" />
+            <path d="M28 65V35L42 50L50 42L58 50L72 35V65" stroke="url(#footer-m-grad)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M30 52C40 42 48 48 55 54C62 60 70 52 75 42" stroke="#00A2E8" stroke-width="6" stroke-linecap="round" fill="none" />
+            <defs>
+              <linearGradient id="footer-logo-border" x1="0" y1="0" x2="100" y2="100">
+                <stop offset="0%" stop-color="#FCD116" />
+                <stop offset="50%" stop-color="#00A859" />
+                <stop offset="100%" stop-color="#00A2E8" />
+              </linearGradient>
+              <linearGradient id="footer-m-grad" x1="0" y1="0" x2="100" y2="100">
+                <stop offset="0%" stop-color="#FCD116" />
+                <stop offset="100%" stop-color="#00A859" />
+              </linearGradient>
+            </defs>
+          </svg>
+          <div class="footer-logo-text">Meireles <span>Modas</span></div>
+        </a>
+        <p class="footer-desc">
+          Referência em moda masculina casual, streetwear contemporâneo e camisas de time oficiais. Elevando a sua autoestima com o melhor caimento.
+        </p>
+        <div class="social-links">
+          <a href="https://instagram.com" target="_blank" class="social-btn" aria-label="Siga no Instagram"><i class="ri-instagram-line"></i></a>
+          <a href="#" class="social-btn" aria-label="Fale Conosco no WhatsApp"><i class="ri-whatsapp-line"></i></a>
+          <a href="#" class="social-btn" aria-label="Curta no Facebook"><i class="ri-facebook-circle-line"></i></a>
+        </div>
+      </div>
+
+      <!-- Coluna Categorias -->
+      <div>
+        <h3 class="footer-col-title">Categorias</h3>
+        <ul class="footer-links">
+          <li><a href="loja.html?cat=times">Camisas de Time</a></li>
+          <li><a href="loja.html?cat=streetwear">Streetwear</a></li>
+          <li><a href="loja.html?cat=moda">Moda Casual</a></li>
+          <li><a href="loja.html">Novos Lançamentos</a></li>
+        </ul>
+      </div>
+
+      <!-- Coluna Informações -->
+      <div>
+        <h3 class="footer-col-title">Institucional</h3>
+        <ul class="footer-links">
+          <li><a href="#testimonials">Avaliações de Clientes</a></li>
+          <li><a href="#">Política de Trocas</a></li>
+          <li><a href="#">Termos de Uso</a></li>
+        </ul>
+      </div>
+
+      <!-- Coluna Contato -->
+      <div>
+        <h3 class="footer-col-title">Atendimento</h3>
+        <div class="footer-contact-info">
+          <div class="contact-info-item">
+            <i class="ri-map-pin-2-line"></i>
+            <p>Av. Principal Varejista, 1200 - Centro, Fortaleza - CE</p>
+          </div>
+          <div class="contact-info-item">
+            <i class="ri-whatsapp-line"></i>
+            <p>(85) 99999-8888<br><span style="font-size: 0.75rem; color: var(--text-muted);">Seg a Sáb - 9h às 19h</span></p>
+          </div>
+          <div class="contact-info-item">
+            <i class="ri-mail-line"></i>
+            <p>contato@meirelesmodas.com.br</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Rodapé Bottom -->
+    <div class="container footer-bottom">
+      <p>&copy; 2026 Meireles Modas Oficial. Todos os direitos reservados. CNPJ: 12.345.678/0001-99</p>
+      <div class="payment-methods">
+        <i class="ri-pix-fill" title="PIX"></i>
+        <i class="ri-visa-line" title="Visa"></i>
+        <i class="ri-mastercard-line" title="Mastercard"></i>
+        <i class="ri-bank-card-line" title="Cartão"></i>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==========================================
+       SHOPPING CART DRAWER (GAVETA DO CARRINHO)
+       ========================================== -->
+  <div class="cart-drawer-overlay" id="cart-overlay"></div>
+  <div class="cart-drawer" id="cart-drawer" role="dialog" aria-modal="true" aria-labelledby="cart-title">
+    <div class="cart-header">
+      <h3 class="cart-header-title" id="cart-title"><i class="ri-shopping-cart-line"></i> Seu Carrinho</h3>
+      <button class="btn-close-cart" id="close-cart" aria-label="Fechar Carrinho"><i class="ri-close-line"></i></button>
+    </div>
+    
+    <div class="cart-body">
+      <!-- Carrinho Vazio -->
+      <div class="cart-empty-msg" id="cart-empty">
+        <i class="ri-shopping-bag-3-line cart-empty-icon"></i>
+        <h4 style="font-size: 1.15rem; font-weight: 700; color: var(--text-primary);">Seu carrinho está vazio</h4>
+        <p style="font-size: 0.85rem; max-width: 250px;">Adicione produtos de nosso catálogo e garanta frete grátis!</p>
+        <button class="btn-secondary" onclick="closeCart()" style="margin-top: 10px; width: 100%;">Continuar Navegando</button>
+      </div>
+
+      <!-- Lista de Itens do Carrinho -->
+      <div class="cart-items-list" id="cart-items-list">
+        <!-- Inseridos dinamicamente via script.js -->
+      </div>
+    </div>
+
+    <!-- Rodapé com Subtotal e Botão Finalizar -->
+    <div class="cart-footer">
+      <div class="cart-totals">
+        <div class="cart-total-row">
+          <span>Subtotal</span>
+          <span id="subtotal-value">R$ 0,00</span>
+        </div>
+        <div class="cart-total-row">
+          <span>Frete</span>
+          <span id="shipping-value">R$ 15,00</span>
+        </div>
+        <div class="cart-total-row grand-total">
+          <span>Total Geral</span>
+          <span id="total-value">R$ 0,00</span>
+        </div>
+      </div>
+      
+      <!-- Clique direciona para a nova página dedicada de checkout -->
+      <a href="checkout.html" class="btn-checkout" id="btn-checkout" style="text-align:center; display:flex; justify-content:center; align-items:center;">
+        <i class="ri-wallet-3-line"></i> Ir para o Pagamento
+      </a>
+    </div>
+  </div>
+
+  <!-- Banco de dados de produtos compartilhado -->
+  <script src="products.js"></script>
+  <!-- Arquivo Lógico Principal -->
+  <script src="script.js"></script>
+</body>
+</html>

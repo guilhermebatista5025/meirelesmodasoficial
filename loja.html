@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loja Oficial | Meireles Modas</title>
+  
+  <meta name="description" content="Navegue por toda a coleção da Meireles Modas Oficial. Camisas de time, camisetas streetwear, bermudas e muito mais. Filtros avançados e checkout prático.">
+  
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
+  <link rel="stylesheet" href="index.css?v=2.0">
+</head>
+<body>
+
+  <!-- ==========================================
+       ANNOUNCEMENT BAR & TICKER
+       ========================================== -->
+  <div class="announcement-bar">
+    <div class="ticker-wrap">
+      <div class="ticker">
+        <div class="ticker-item"><i class="ri-truck-line"></i> FRETE GRÁTIS PARA COMPRAS ACIMA DE <span>R$ 250</span></div>
+        <div class="ticker-item"><i class="ri-coupon-3-line"></i> USE O CUPOM <span>MEIRELES10</span> E GANHE 10% OFF</div>
+        <div class="ticker-item"><i class="ri-whatsapp-line"></i> COMPRE CONVERSANDO COM NOSSOS VENDEDORES</div>
+        <div class="ticker-item"><i class="ri-shield-check-line"></i> PRODUTOS COM GARANTIA E QUALIDADE PREMIUM</div>
+        <!-- Duplicar itens para scroll contínuo e suave -->
+        <div class="ticker-item"><i class="ri-truck-line"></i> FRETE GRÁTIS PARA COMPRAS ACIMA DE <span>R$ 250</span></div>
+        <div class="ticker-item"><i class="ri-coupon-3-line"></i> USE O CUPOM <span>MEIRELES10</span> E GANHE 10% OFF</div>
+        <div class="ticker-item"><i class="ri-whatsapp-line"></i> COMPRE CONVERSANDO COM NOSSOS VENDEDORES</div>
+        <div class="ticker-item"><i class="ri-shield-check-line"></i> PRODUTOS COM GARANTIA E QUALIDADE PREMIUM</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       HEADER & NAVBAR
+       ========================================== -->
+  <header id="main-header">
+    <div class="container navbar">
+      <!-- Logo da Marca -->
+      <a href="index.html" class="logo-container" id="brand-logo" aria-label="Meireles Modas Home">
+        <svg class="logo-icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="50" cy="50" r="46" stroke="url(#logo-border-grad)" stroke-width="6" fill="#0D0D10" />
+          <path d="M28 65V35L42 50L50 42L58 50L72 35V65" stroke="url(#m-grad)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M30 52C40 42 48 48 55 54C62 60 70 52 75 42" stroke="#00A2E8" stroke-width="6" stroke-linecap="round" fill="none" />
+          <defs>
+            <linearGradient id="logo-border-grad" x1="0" y1="0" x2="100" y2="100">
+              <stop offset="0%" stop-color="#FCD116" />
+              <stop offset="50%" stop-color="#00A859" />
+              <stop offset="100%" stop-color="#00A2E8" />
+            </linearGradient>
+            <linearGradient id="m-grad" x1="0" y1="0" x2="100" y2="100">
+              <stop offset="0%" stop-color="#FCD116" />
+              <stop offset="100%" stop-color="#00A859" />
+            </linearGradient>
+          </defs>
+        </svg>
+        <div class="logo-text">
+          <span class="brand-title">Meireles</span>
+          <span class="brand-accent">Modas Oficial</span>
+        </div>
+      </a>
+
+      <!-- Menu de Navegação -->
+      <nav id="nav-navigation">
+        <ul class="nav-links">
+          <li><a href="index.html">Início</a></li>
+          <li><a href="loja.html" class="active">Loja</a></li>
+          <li><a href="index.html#testimonials">Avaliações</a></li>
+        </ul>
+      </nav>
+
+      <!-- Ações do Header (Tema e Carrinho) -->
+      <div class="nav-actions">
+        <button id="theme-toggle" class="nav-btn" aria-label="Alternar Tema Claro/Escuro">
+          <i class="ri-sun-line" id="theme-icon"></i>
+        </button>
+        
+        <button id="cart-toggle" class="nav-btn" aria-label="Abrir Carrinho de Compras">
+          <i class="ri-shopping-bag-line"></i>
+          <span id="cart-badge-count" class="cart-count">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Elemento Decorativo de Brilho de Fundo -->
+  <div class="glow-bg" style="top: 20%; left: 10%;"></div>
+
+  <!-- ==========================================
+       MAIN CONTENT (CATÁLOGO DA LOJA)
+       ========================================== -->
+  <main class="container" style="padding-top: 40px; padding-bottom: 80px;">
+    
+    <!-- Cabeçalho Interno da Loja -->
+    <div class="loja-header">
+      <div>
+        <h1 style="font-size: 2.25rem; font-weight: 800; letter-spacing: -0.03em;">Nosso Catálogo Completo</h1>
+        <p style="color:var(--text-secondary); margin-top: 4px;">Explore peças streetwear e mantos esportivos com caimento premium.</p>
+      </div>
+      
+      <!-- Ordenador -->
+      <div class="loja-sort-container">
+        <label for="loja-sort" style="font-size:0.85rem; font-weight:700; color:var(--text-secondary); text-transform:uppercase;">Ordenar Por:</label>
+        <select id="loja-sort" style="padding: 10px 16px; font-size:0.85rem;">
+          <option value="default" selected>Lançamentos (Padrão)</option>
+          <option value="price-asc">Menor Preço</option>
+          <option value="price-desc">Maior Preço</option>
+          <option value="alpha">Nome (A - Z)</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Filtros Horizontais (Deitados em cima das peças) -->
+    <div class="loja-filters-horizontal">
+      
+      <!-- Abas de Categoria em pílulas horizontais -->
+      <div class="filter-tabs" style="margin-bottom: 0; padding-bottom: 0; border: none; background: none; gap: 8px;">
+        <button class="filter-btn active" data-category="all">Todas as Peças</button>
+        <button class="filter-btn" data-category="times">Camisas de Time</button>
+        <button class="filter-btn" data-category="streetwear">Streetwear</button>
+        <button class="filter-btn" data-category="moda">Moda Casual</button>
+      </div>
+      
+      <!-- Campo de Busca inline na direita -->
+      <div class="loja-search-inline">
+        <i class="ri-search-line"></i>
+        <input type="text" id="loja-search" placeholder="Buscar nesta categoria...">
+      </div>
+      
+    </div>
+
+    <!-- Grade de Produtos Completa -->
+    <div class="products-grid" id="loja-products-grid" style="margin-top: 30px;">
+      <!-- Renderizado via script.js -->
+    </div>
+
+  </main>
+
+  <!-- ==========================================
+       FOOTER
+       ========================================== -->
+  <footer id="main-footer">
+    <div class="container footer-grid">
+      <div class="footer-col-about">
+        <a href="index.html" class="footer-logo">
+          <svg class="logo-icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 38px; height: 38px;">
+            <circle cx="50" cy="50" r="46" stroke="url(#footer-logo-border)" stroke-width="6" fill="#0D0D10" />
+            <path d="M28 65V35L42 50L50 42L58 50L72 35V65" stroke="url(#footer-m-grad)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M30 52C40 42 48 48 55 54C62 60 70 52 75 42" stroke="#00A2E8" stroke-width="6" stroke-linecap="round" fill="none" />
+            <defs>
+              <linearGradient id="footer-logo-border" x1="0" y1="0" x2="100" y2="100">
+                <stop offset="0%" stop-color="#FCD116" />
+                <stop offset="50%" stop-color="#00A859" />
+                <stop offset="100%" stop-color="#00A2E8" />
+              </linearGradient>
+              <linearGradient id="footer-m-grad" x1="0" y1="0" x2="100" y2="100">
+                <stop offset="0%" stop-color="#FCD116" />
+                <stop offset="100%" stop-color="#00A859" />
+              </linearGradient>
+            </defs>
+          </svg>
+          <div class="footer-logo-text">Meireles <span>Modas</span></div>
+        </a>
+        <p class="footer-desc">
+          Referência em moda masculina casual, streetwear contemporâneo e camisas de time oficiais. Elevando a sua autoestima com o melhor caimento.
+        </p>
+        <div class="social-links">
+          <a href="https://instagram.com" target="_blank" class="social-btn" aria-label="Siga no Instagram"><i class="ri-instagram-line"></i></a>
+          <a href="#" class="social-btn" aria-label="Fale Conosco no WhatsApp"><i class="ri-whatsapp-line"></i></a>
+          <a href="#" class="social-btn" aria-label="Curta no Facebook"><i class="ri-facebook-circle-line"></i></a>
+        </div>
+      </div>
+
+      <div>
+        <h3 class="footer-col-title">Categorias</h3>
+        <ul class="footer-links">
+          <li><a href="loja.html?cat=times">Camisas de Time</a></li>
+          <li><a href="loja.html?cat=streetwear">Streetwear</a></li>
+          <li><a href="loja.html?cat=moda">Moda Casual</a></li>
+          <li><a href="loja.html">Novos Lançamentos</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="footer-col-title">Institucional</h3>
+        <ul class="footer-links">
+          <li><a href="index.html#testimonials">Avaliações de Clientes</a></li>
+          <li><a href="#">Política de Trocas</a></li>
+          <li><a href="#">Termos de Uso</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="footer-col-title">Atendimento</h3>
+        <div class="footer-contact-info">
+          <div class="contact-info-item">
+            <i class="ri-map-pin-2-line"></i>
+            <p>Av. Principal Varejista, 1200 - Centro, Fortaleza - CE</p>
+          </div>
+          <div class="contact-info-item">
+            <i class="ri-whatsapp-line"></i>
+            <p>(85) 99999-8888<br><span style="font-size: 0.75rem; color: var(--text-muted);">Seg a Sáb - 9h às 19h</span></p>
+          </div>
+          <div class="contact-info-item">
+            <i class="ri-mail-line"></i>
+            <p>contato@meirelesmodas.com.br</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <p>&copy; 2026 Meireles Modas Oficial. Todos os direitos reservados. CNPJ: 12.345.678/0001-99</p>
+      <div class="payment-methods">
+        <i class="ri-pix-fill" title="PIX"></i>
+        <i class="ri-visa-line" title="Visa"></i>
+        <i class="ri-mastercard-line" title="Mastercard"></i>
+        <i class="ri-bank-card-line" title="Cartão"></i>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==========================================
+       SHOPPING CART DRAWER (GAVETA DO CARRINHO)
+       ========================================== -->
+  <div class="cart-drawer-overlay" id="cart-overlay"></div>
+  <div class="cart-drawer" id="cart-drawer" role="dialog" aria-modal="true" aria-labelledby="cart-title">
+    <div class="cart-header">
+      <h3 class="cart-header-title" id="cart-title"><i class="ri-shopping-cart-line"></i> Seu Carrinho</h3>
+      <button class="btn-close-cart" id="close-cart" aria-label="Fechar Carrinho"><i class="ri-close-line"></i></button>
+    </div>
+    
+    <div class="cart-body">
+      <div class="cart-empty-msg" id="cart-empty">
+        <i class="ri-shopping-bag-3-line cart-empty-icon"></i>
+        <h4 style="font-size: 1.15rem; font-weight: 700; color: var(--text-primary);">Seu carrinho está vazio</h4>
+        <p style="font-size: 0.85rem; max-width: 250px;">Adicione produtos de nosso catálogo e garanta frete grátis!</p>
+        <button class="btn-secondary" onclick="closeCart()" style="margin-top: 10px; width: 100%;">Continuar Navegando</button>
+      </div>
+
+      <div class="cart-items-list" id="cart-items-list">
+        <!-- Inseridos dinamicamente via script.js -->
+      </div>
+    </div>
+
+    <div class="cart-footer">
+      <div class="cart-totals">
+        <div class="cart-total-row">
+          <span>Subtotal</span>
+          <span id="subtotal-value">R$ 0,00</span>
+        </div>
+        <div class="cart-total-row">
+          <span>Frete</span>
+          <span id="shipping-value">R$ 15,00</span>
+        </div>
+        <div class="cart-total-row grand-total">
+          <span>Total Geral</span>
+          <span id="total-value">R$ 0,00</span>
+        </div>
+      </div>
+      
+      <a href="checkout.html" class="btn-checkout" id="btn-checkout" style="text-align:center; display:flex; justify-content:center; align-items:center;">
+        <i class="ri-wallet-3-line"></i> Ir para o Pagamento
+      </a>
+    </div>
+  </div>
+
+  <script src="products.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
