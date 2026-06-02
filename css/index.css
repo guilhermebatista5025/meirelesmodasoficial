@@ -1,0 +1,25 @@
+/* ==========================================
+   CSS AGGREGATOR - MEIRELES MODAS OFICIAL
+   Importa todos os módulos CSS na ordem correta
+   ========================================== */
+
+/* 1. Design System: variáveis, tokens e resets globais */
+@import url('variables.css');
+
+/* 2. Layout: header, navbar, footer, preloader, drawer mobile */
+@import url('layout.css');
+
+/* 3. Componentes: botões, product cards, cart, quickview modal */
+@import url('components.css');
+
+/* 4. Página Home: hero, benefits bar, categorias, testemunhos */
+@import url('home.css');
+
+/* 5. Página Loja: filtros horizontais, busca, sidebar */
+@import url('loja.css');
+
+/* 6. Página Produto: galeria, miniaturas, specs */
+@import url('produto.css');
+
+/* 7. Página Checkout: wizard, 3D card, PIX, cupom, tabela */
+@import url('checkout.css');

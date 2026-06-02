@@ -44,15 +44,49 @@ function setupGlobalEventListeners() {
   if (closeCartBtn) closeCartBtn.addEventListener("click", closeCart);
   if (cartOverlay) cartOverlay.addEventListener("click", closeCart);
 
-  // Alternar Tema Claro/Escuro
-  const themeToggle = document.getElementById("theme-toggle");
-  if (themeToggle) {
-    themeToggle.addEventListener("click", () => {
-      const currentTheme = document.documentElement.getAttribute("data-theme") || "dark";
-      const newTheme = currentTheme === "dark" ? "light" : "dark";
-      document.documentElement.setAttribute("data-theme", newTheme);
-      localStorage.setItem("meireles_theme", newTheme);
-      updateThemeIcon(newTheme);
+  // Abrir e Fechar Menu Mobile
+  const menuToggle = document.getElementById("mobile-menu-toggle");
+  const closeMenuBtn = document.getElementById("btn-close-menu");
+  const menuOverlay = document.getElementById("mobile-menu-overlay");
+
+  if (menuToggle) menuToggle.addEventListener("click", openMobileMenu);
+  if (closeMenuBtn) closeMenuBtn.addEventListener("click", closeMobileMenu);
+  if (menuOverlay) menuOverlay.addEventListener("click", closeMobileMenu);
+
+  // Lógica do Modal Quick View
+  const closeQv = document.getElementById("close-quickview");
+  const qvOverlay = document.getElementById("quickview-overlay");
+  
+  if (closeQv) closeQv.addEventListener("click", closeQuickView);
+  if (qvOverlay) {
+    qvOverlay.addEventListener("click", (e) => {
+      if (e.target === qvOverlay) closeQuickView();
+    });
+  }
+
+  const qvQtyInput = document.getElementById("qv-qty");
+  const qvQtyDec = document.getElementById("qv-qty-dec");
+  const qvQtyInc = document.getElementById("qv-qty-inc");
+
+  if (qvQtyInput && qvQtyDec && qvQtyInc) {
+    qvQtyDec.addEventListener("click", () => {
+      let val = parseInt(qvQtyInput.value) || 1;
+      if (val > 1) qvQtyInput.value = val - 1;
+    });
+    qvQtyInc.addEventListener("click", () => {
+      let val = parseInt(qvQtyInput.value) || 1;
+      qvQtyInput.value = val + 1;
+    });
+  }
+
+  const qvAddBtn = document.getElementById("qv-add-btn");
+  if (qvAddBtn) {
+    qvAddBtn.addEventListener("click", () => {
+      if (currentQvProductId) {
+        const qty = parseInt(qvQtyInput.value) || 1;
+        addToCart(currentQvProductId, currentQvSelectedSize, qty);
+        closeQuickView();
+      }
     });
   }
 }
@@ -61,18 +95,30 @@ function setupGlobalEventListeners() {
 // CONTROLE DE TEMA (CLARO/ESCURO)
 // ==========================================
 function initTheme() {
-  const savedTheme = localStorage.getItem("meireles_theme") || "dark";
-  document.documentElement.setAttribute("data-theme", savedTheme);
-  updateThemeIcon(savedTheme);
+  // O tema da loja é exclusivamente Escuro (Dark Mode) por padrão
+  document.documentElement.setAttribute("data-theme", "dark");
 }
 
-function updateThemeIcon(theme) {
-  const themeIcon = document.getElementById("theme-icon");
-  if (!themeIcon) return;
-  if (theme === "light") {
-    themeIcon.className = "ri-moon-line";
-  } else {
-    themeIcon.className = "ri-sun-line";
+// ==========================================
+// CONTROLE DO MENU MOBILE (DRAWER)
+// ==========================================
+function openMobileMenu() {
+  const drawer = document.getElementById("mobile-menu-drawer");
+  const overlay = document.getElementById("mobile-menu-overlay");
+  if (drawer && overlay) {
+    drawer.classList.add("open");
+    overlay.classList.add("open");
+    document.body.style.overflow = "hidden";
+  }
+}
+
+function closeMobileMenu() {
+  const drawer = document.getElementById("mobile-menu-drawer");
+  const overlay = document.getElementById("mobile-menu-overlay");
+  if (drawer && overlay) {
+    drawer.classList.remove("open");
+    overlay.classList.remove("open");
+    document.body.style.overflow = "";
   }
 }
 
@@ -267,7 +313,7 @@ function renderHomeProducts() {
         <img class="product-img img-front" src="${prod.image}" alt="${prod.name}" loading="lazy">
         <img class="product-img img-back" src="${prod.imageBack}" alt="${prod.name} (Verso)" loading="lazy">
         <div class="product-overlay">
-          <span class="btn-quick-view">
+          <span class="btn-quick-view" onclick="event.stopPropagation(); openQuickView(${prod.id});">
             <i class="ri-eye-line"></i> Ver Detalhes
           </span>
         </div>
@@ -383,7 +429,7 @@ function renderLojaProducts() {
         <img class="product-img img-front" src="${prod.image}" alt="${prod.name}" loading="lazy">
         <img class="product-img img-back" src="${prod.imageBack}" alt="${prod.name} (Verso)" loading="lazy">
         <div class="product-overlay">
-          <span class="btn-quick-view">
+          <span class="btn-quick-view" onclick="event.stopPropagation(); openQuickView(${prod.id});">
             <i class="ri-eye-line"></i> Ver Detalhes
           </span>
         </div>
@@ -594,7 +640,7 @@ function renderRelatedProducts(currentProduct) {
         <img class="product-img img-front" src="${prod.image}" alt="${prod.name}">
         <img class="product-img img-back" src="${prod.imageBack}" alt="${prod.name} (Verso)">
         <div class="product-overlay">
-          <span class="btn-quick-view"><i class="ri-eye-line"></i> Espiar</span>
+          <span class="btn-quick-view" onclick="event.stopPropagation(); openQuickView(${prod.id});"><i class="ri-eye-line"></i> Espiar</span>
         </div>
       </div>
       <div class="product-details">
@@ -612,62 +658,277 @@ function renderRelatedProducts(currentProduct) {
 // ==========================================
 // PÁGINA DE CHECKOUT INTERATIVO (PAGAMENTO)
 // ==========================================
+let currentStep = 1;
+let appliedCouponCode = "";
+
 function initCheckoutPage() {
   renderCheckoutOrderSummary();
   setupCheckoutEventListeners();
+  updateWizardUI();
 }
 
 function renderCheckoutOrderSummary() {
-  const summaryContainer = document.getElementById("checkout-summary-items");
-  const checkoutSubtotal = document.getElementById("checkout-subtotal");
-  const checkoutShipping = document.getElementById("checkout-shipping");
-  const checkoutTotal = document.getElementById("checkout-total");
-
-  if (!summaryContainer) return;
+  const summaryTableBody = document.getElementById("checkout-summary-table-body");
+  if (!summaryTableBody) return;
 
   if (cart.length === 0) {
-    summaryContainer.innerHTML = `<p style="color:var(--text-muted); text-align:center; padding: 20px 0;">Seu carrinho está vazio. Adicione produtos antes de pagar.</p>`;
+    summaryTableBody.innerHTML = `<tr><td colspan="5" style="color:var(--text-muted); text-align:center; padding: 30px 0;">Seu carrinho está vazio. Adicione produtos antes de finalizar.</td></tr>`;
+    calculateCheckoutTotals();
     return;
   }
 
-  summaryContainer.innerHTML = "";
-  let subtotal = 0;
-
+  summaryTableBody.innerHTML = "";
   cart.forEach(item => {
     const itemTotal = item.price * item.quantity;
-    subtotal += itemTotal;
-
-    const row = document.createElement("div");
-    row.style.display = "flex";
-    row.style.justify = "space-between";
-    row.style.alignItems = "center";
-    row.style.marginBottom = "16px";
-    row.style.borderBottom = "1px solid rgba(255,255,255,0.04)";
-    row.style.paddingBottom = "12px";
-
-    row.innerHTML = `
-      <div style="display:flex; gap:12px; align-items:center;">
-        <img src="${item.image}" alt="" style="width:50px; height:60px; object-fit:cover; border-radius:var(--radius-sm);">
-        <div>
-          <h4 style="font-size:0.9rem; font-weight:700; margin-bottom:4px;">${item.name}</h4>
-          <span style="font-size:0.75rem; color:var(--text-muted);">Tam: <b>${item.size}</b> | Qtd: <b>${item.quantity}x</b></span>
-        </div>
-      </div>
-      <span style="font-weight:700; color:var(--brand-yellow);">R$ ${itemTotal.toFixed(2).replace('.', ',')}</span>
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td style="width: 70px;">
+        <img src="${item.image}" class="summary-item-img" alt="${item.name}">
+      </td>
+      <td>
+        <h4 style="font-size:0.95rem; font-weight:700; margin-bottom:4px;">${item.name}</h4>
+      </td>
+      <td>
+        <span style="font-weight: 600;">${item.size}</span>
+      </td>
+      <td style="text-align: center;">
+        <span>${item.quantity}x</span>
+      </td>
+      <td style="text-align: right; font-weight:700; color:var(--brand-yellow);">
+        R$ ${itemTotal.toFixed(2).replace('.', ',')}
+      </td>
     `;
-    summaryContainer.appendChild(row);
+    summaryTableBody.appendChild(tr);
   });
 
-  const isFreeShipping = subtotal >= 250;
-  const shippingCost = isFreeShipping ? 0 : 15.00;
-  const total = subtotal + shippingCost;
+  calculateCheckoutTotals();
+}
+
+function calculateCheckoutTotals() {
+  let subtotal = 0;
+  cart.forEach(item => {
+    subtotal += item.price * item.quantity;
+  });
+
+  let shippingCost = subtotal >= 250 ? 0 : 15.00;
+  let discountAmount = 0;
+
+  if (appliedCouponCode) {
+    if (appliedCouponCode === "MEIRELES10") {
+      discountAmount = subtotal * 0.10;
+    } else if (appliedCouponCode === "BEMVINDO5") {
+      discountAmount = subtotal * 0.05;
+    } else if (appliedCouponCode === "FRETEGRATIS") {
+      discountAmount = shippingCost;
+      shippingCost = 0;
+    }
+  }
+
+  const total = subtotal + shippingCost - (appliedCouponCode === "FRETEGRATIS" ? 0 : discountAmount);
+
+  const checkoutSubtotal = document.getElementById("checkout-subtotal");
+  const checkoutShipping = document.getElementById("checkout-shipping");
+  const checkoutDiscountRow = document.getElementById("checkout-discount-row");
+  const checkoutDiscount = document.getElementById("checkout-discount");
+  const checkoutTotal = document.getElementById("checkout-total");
 
   if (checkoutSubtotal) checkoutSubtotal.textContent = `R$ ${subtotal.toFixed(2).replace('.', ',')}`;
+  
   if (checkoutShipping) {
-    checkoutShipping.textContent = isFreeShipping ? "GRÁTIS" : `R$ ${shippingCost.toFixed(2).replace('.', ',')}`;
-    if (isFreeShipping) checkoutShipping.style.color = "var(--brand-green)";
+    if (shippingCost === 0) {
+      checkoutShipping.textContent = "GRÁTIS";
+      checkoutShipping.style.color = "var(--brand-green)";
+    } else {
+      checkoutShipping.textContent = `R$ ${shippingCost.toFixed(2).replace('.', ',')}`;
+      checkoutShipping.style.color = "";
+    }
   }
+
+  if (checkoutDiscountRow && checkoutDiscount) {
+    if (discountAmount > 0 && appliedCouponCode !== "FRETEGRATIS") {
+      checkoutDiscountRow.style.display = "flex";
+      checkoutDiscount.textContent = `- R$ ${discountAmount.toFixed(2).replace('.', ',')}`;
+    } else {
+      checkoutDiscountRow.style.display = "none";
+    }
+  }
+
   if (checkoutTotal) checkoutTotal.textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
+
+  return { subtotal, shippingCost, discountAmount, total };
+}
+
+function handleApplyCoupon() {
+  const input = document.getElementById("coupon-code-input");
+  const msgElement = document.getElementById("coupon-status-msg");
+  if (!input || !msgElement) return;
+
+  const code = input.value.trim().toUpperCase();
+  if (!code) {
+    msgElement.textContent = "Por favor, digite um cupom.";
+    msgElement.className = "coupon-message error";
+    return;
+  }
+
+  const validCoupons = ["MEIRELES10", "BEMVINDO5", "FRETEGRATIS"];
+
+  if (validCoupons.includes(code)) {
+    appliedCouponCode = code;
+    
+    let subtotal = 0;
+    cart.forEach(item => subtotal += item.price * item.quantity);
+    
+    let descText = "";
+    if (code === "MEIRELES10") {
+      descText = "Cupom MEIRELES10 aplicado! 10% de desconto no subtotal.";
+    } else if (code === "BEMVINDO5") {
+      descText = "Cupom BEMVINDO5 aplicado! 5% de desconto no subtotal.";
+    } else if (code === "FRETEGRATIS") {
+      if (subtotal >= 250) {
+        descText = "Cupom FRETEGRATIS aplicado! (Seu frete já era grátis).";
+      } else {
+        descText = "Cupom FRETEGRATIS aplicado! Frete grátis garantido.";
+      }
+    }
+
+    msgElement.textContent = descText;
+    msgElement.className = "coupon-message success";
+    
+    calculateCheckoutTotals();
+  } else {
+    msgElement.textContent = "Cupom inválido ou expirado.";
+    msgElement.className = "coupon-message error";
+    appliedCouponCode = "";
+    calculateCheckoutTotals();
+  }
+}
+
+function goToStep(step) {
+  if (step > currentStep) {
+    if (currentStep === 1) {
+      if (!validateStep1()) return;
+    }
+    if (currentStep <= 2 && step > 2) {
+      if (!validateStep1()) return;
+      if (!validateStep2()) return;
+    }
+    if (step >= 3) {
+      if (cart.length === 0) {
+        alert("Adicione itens ao carrinho antes de continuar!");
+        return;
+      }
+    }
+  }
+  currentStep = step;
+  updateWizardUI();
+}
+
+function nextStep() {
+  if (currentStep === 1) {
+    if (!validateStep1()) return;
+  }
+  if (currentStep === 2) {
+    if (!validateStep2()) return;
+  }
+  if (currentStep === 3) {
+    if (cart.length === 0) {
+      alert("Adicione itens ao carrinho antes de continuar!");
+      return;
+    }
+  }
+  if (currentStep < 4) {
+    currentStep++;
+    updateWizardUI();
+  }
+}
+
+function prevStep() {
+  if (currentStep > 1) {
+    currentStep--;
+    updateWizardUI();
+  }
+}
+
+function validateStep1() {
+  const nome = document.getElementById("ch-nome");
+  const phone = document.getElementById("ch-phone");
+
+  let isValid = true;
+  const fields = [nome, phone];
+  
+  fields.forEach(field => {
+    if (!field) return;
+    if (!field.value.trim()) {
+      field.style.borderColor = "#ff4a4a";
+      isValid = false;
+    } else {
+      field.style.borderColor = "";
+    }
+  });
+
+  if (!isValid) {
+    alert("Por favor, preencha seu Nome e WhatsApp.");
+  }
+  return isValid;
+}
+
+function validateStep2() {
+  const rua = document.getElementById("ch-rua");
+  const numero = document.getElementById("ch-numero");
+  const bairro = document.getElementById("ch-bairro");
+  const cidade = document.getElementById("ch-cidade");
+
+  let isValid = true;
+  const fields = [rua, numero, bairro, cidade];
+  
+  fields.forEach(field => {
+    if (!field) return;
+    if (!field.value.trim()) {
+      field.style.borderColor = "#ff4a4a";
+      isValid = false;
+    } else {
+      field.style.borderColor = "";
+    }
+  });
+
+  if (!isValid) {
+    alert("Por favor, preencha todos os campos obrigatórios (*) do endereço de entrega.");
+  }
+  return isValid;
+}
+
+function updateWizardUI() {
+  document.querySelectorAll(".step-panel").forEach((panel, index) => {
+    if (index + 1 === currentStep) {
+      panel.classList.add("active");
+    } else {
+      panel.classList.remove("active");
+    }
+  });
+
+  document.querySelectorAll(".step-node").forEach((node, index) => {
+    const stepNum = index + 1;
+    if (stepNum < currentStep) {
+      node.classList.add("completed");
+      node.classList.remove("active");
+    } else if (stepNum === currentStep) {
+      node.classList.add("active");
+      node.classList.remove("completed");
+    } else {
+      node.classList.remove("active", "completed");
+    }
+  });
+
+  const progressLine = document.getElementById("step-progress-line");
+  if (progressLine) {
+    const percentage = ((currentStep - 1) / 3) * 100;
+    progressLine.style.width = `${percentage}%`;
+  }
+  
+  const wizardContainer = document.querySelector(".checkout-steps-container");
+  if (wizardContainer) {
+    wizardContainer.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
 }
 
 function setupCheckoutEventListeners() {
@@ -720,12 +981,10 @@ function setupCheckoutEventListeners() {
   // Atualizar Número do Cartão
   if (inputNum && displayNum) {
     inputNum.addEventListener("input", (e) => {
-      // Máscara básica de 4 em 4 números
       let val = e.target.value.replace(/\D/g, '');
       val = val.substring(0, 16);
       let formatted = val.match(/.{1,4}/g)?.join(' ') || "";
       e.target.value = formatted;
-
       displayNum.textContent = formatted || "•••• •••• •••• ••••";
     });
   }
@@ -741,7 +1000,6 @@ function setupCheckoutEventListeners() {
   // Atualizar Validade
   if (inputExpiry && displayExpiry) {
     inputExpiry.addEventListener("input", (e) => {
-      // Máscara MM/AA
       let val = e.target.value.replace(/\D/g, '');
       if (val.length >= 2) {
         val = val.substring(0, 2) + '/' + val.substring(2, 4);
@@ -800,8 +1058,15 @@ function processCheckoutOrder() {
   if (paymentMethod === "pix") {
     paymentText = "PIX (Aguardando comprovante)";
   } else if (paymentMethod === "card") {
-    const cardNum = document.getElementById("card-num-input").value;
-    const cardName = document.getElementById("card-name-input").value;
+    const cardNum = document.getElementById("card-num-input").value.trim();
+    const cardName = document.getElementById("card-name-input").value.trim();
+    const cardExpiry = document.getElementById("card-expiry-input").value.trim();
+    const cardCvv = document.getElementById("card-cvv-input").value.trim();
+
+    if (!cardNum || !cardName || !cardExpiry || !cardCvv) {
+      alert("Por favor, preencha todos os dados do cartão de crédito.");
+      return;
+    }
     paymentText = `Cartão de Crédito (Final de número: ${cardNum.slice(-4)}) - Titular: ${cardName}`;
   } else {
     paymentText = "Dinheiro / Cartão na Entrega";
@@ -828,14 +1093,21 @@ function processCheckoutOrder() {
     msg += `   Subtotal: *R$ ${itemTotal.toFixed(2).replace('.', ',')}*\n\n`;
   });
 
-  const isFreeShipping = subtotal >= 250;
-  const shippingCost = isFreeShipping ? 0 : 15.00;
-  const total = subtotal + shippingCost;
+  const totals = calculateCheckoutTotals();
 
   msg += `-------------------------------------------\n`;
-  msg += `💵 *Subtotal:* R$ ${subtotal.toFixed(2).replace('.', ',')}\n`;
-  msg += `🚚 *Frete:* ${isFreeShipping ? 'GRÁTIS' : 'R$ ' + shippingCost.toFixed(2).replace('.', ',')}\n`;
-  msg += `🔥 *TOTAL DO PEDIDO:* *R$ ${total.toFixed(2).replace('.', ',')}*\n\n`;
+  msg += `💵 *Subtotal:* R$ ${totals.subtotal.toFixed(2).replace('.', ',')}\n`;
+  
+  if (appliedCouponCode) {
+    if (appliedCouponCode === "FRETEGRATIS") {
+      msg += `🎫 *Cupom:* ${appliedCouponCode} (Frete Grátis)\n`;
+    } else {
+      msg += `🎫 *Cupom:* ${appliedCouponCode} (- R$ ${totals.discountAmount.toFixed(2).replace('.', ',')})\n`;
+    }
+  }
+
+  msg += `🚚 *Frete:* ${totals.shippingCost === 0 ? 'GRÁTIS' : 'R$ ' + totals.shippingCost.toFixed(2).replace('.', ',')}\n`;
+  msg += `🔥 *TOTAL DO PEDIDO:* *R$ ${totals.total.toFixed(2).replace('.', ',')}*\n\n`;
   msg += `✨ *Obrigado pela preferência! Aguardando o processamento do envio.*`;
 
   // Limpar Carrinho
@@ -854,3 +1126,86 @@ function processCheckoutOrder() {
   window.open(whatsappUrl, "_blank");
   window.location.href = "index.html"; // Retorna para Home
 }
+
+// ==========================================
+// LÓGICA DO MODAL DE VISUALIZAÇÃO RÁPIDA (QUICK VIEW)
+// ==========================================
+let currentQvSelectedSize = "";
+let currentQvProductId = null;
+
+function openQuickView(productId) {
+  const qvOverlay = document.getElementById("quickview-overlay");
+  if (!qvOverlay) {
+    // Se o modal não existe na página atual, navega diretamente para a página do produto
+    window.location.href = `produto.html?id=${productId}`;
+    return;
+  }
+
+  const product = PRODUCTS.find(p => p.id === productId);
+  if (!product) return;
+
+  currentQvProductId = productId;
+  
+  // Atualizar DOM do modal
+  const qvImg = document.getElementById("qv-main-img");
+  const qvCategory = document.getElementById("qv-category");
+  const qvTitle = document.getElementById("qv-title");
+  const qvPrice = document.getElementById("qv-price");
+  const qvDescription = document.getElementById("qv-description");
+  const qvQty = document.getElementById("qv-qty");
+
+  if (qvImg) qvImg.src = product.image;
+  if (qvCategory) {
+    qvCategory.textContent = product.category === 'times' ? 'Camisas de Time' : product.category === 'streetwear' ? 'Streetwear' : 'Moda Casual';
+  }
+  if (qvTitle) qvTitle.textContent = product.name;
+  if (qvPrice) qvPrice.textContent = `R$ ${product.price.toFixed(2).replace('.', ',')}`;
+  if (qvDescription) qvDescription.textContent = product.description;
+  if (qvQty) qvQty.value = 1;
+
+  // Renderizar tamanhos
+  currentQvSelectedSize = product.sizes[0];
+  const sizesContainer = document.getElementById("qv-sizes");
+  if (sizesContainer) {
+    sizesContainer.innerHTML = "";
+    product.sizes.forEach(size => {
+      const btn = document.createElement("button");
+      btn.className = `size-pill ${size === currentQvSelectedSize ? 'active' : ''}`;
+      btn.textContent = size;
+      btn.addEventListener("click", () => {
+        sizesContainer.querySelectorAll(".size-pill").forEach(p => p.classList.remove("active"));
+        btn.classList.add("active");
+        currentQvSelectedSize = size;
+      });
+      sizesContainer.appendChild(btn);
+    });
+  }
+
+  // Abrir o modal
+  qvOverlay.classList.add("open");
+  qvOverlay.setAttribute("aria-hidden", "false");
+  document.body.style.overflow = "hidden";
+}
+
+function closeQuickView() {
+  const qvOverlay = document.getElementById("quickview-overlay");
+  if (qvOverlay) {
+    qvOverlay.classList.remove("open");
+    qvOverlay.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+  }
+  currentQvProductId = null;
+}
+
+// ==========================================
+// PRELOADER / SPLASH SCREEN DE CARREGAMENTO
+// ==========================================
+window.addEventListener("load", () => {
+  const preloader = document.getElementById("preloader");
+  if (preloader) {
+    setTimeout(() => {
+      preloader.classList.add("fade-out");
+    }, 850); // 850ms para um efeito suave e marcante
+  }
+});
+

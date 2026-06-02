@@ -5,10 +5,72 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Finalizar Compra | Meireles Modas</title>
   
-  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
   <link rel="stylesheet" href="index.css?v=2.0">
 </head>
 <body>
+
+  <!-- Preloader (Tela de Carregamento) -->
+  <div id="preloader" class="preloader">
+    <div class="preloader-content">
+      <svg class="preloader-logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="46" stroke="url(#preloader-border-grad)" stroke-width="6" fill="#0D0D10" />
+        <path d="M28 65V35L42 50L50 42L58 50L72 35V65" stroke="url(#preloader-m-grad)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M30 52C40 42 48 48 55 54C62 60 70 52 75 42" stroke="#00A2E8" stroke-width="6" stroke-linecap="round" fill="none" />
+        <defs>
+          <linearGradient id="preloader-border-grad" x1="0" y1="0" x2="100" y2="100">
+            <stop offset="0%" stop-color="#FCD116" />
+            <stop offset="50%" stop-color="#00A859" />
+            <stop offset="100%" stop-color="#00A2E8" />
+          </linearGradient>
+          <linearGradient id="preloader-m-grad" x1="0" y1="0" x2="100" y2="100">
+            <stop offset="0%" stop-color="#FCD116" />
+            <stop offset="100%" stop-color="#00A859" />
+          </linearGradient>
+        </defs>
+      </svg>
+      <div class="preloader-title">Meireles Modas</div>
+      <div class="preloader-spinner-bar">
+        <div class="preloader-progress"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       MOBILE MENU DRAWER & OVERLAY
+       ========================================== -->
+  <div class="mobile-menu-overlay" id="mobile-menu-overlay"></div>
+  <div class="mobile-menu-drawer" id="mobile-menu-drawer">
+    <div class="drawer-header">
+      <div class="logo-container">
+        <span class="brand-title" style="font-weight: 800; font-size: 1.25rem; text-transform: uppercase;">Meireles <span style="background: var(--gradient-logo); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Modas</span></span>
+      </div>
+      <button id="btn-close-menu" class="btn-close-menu" aria-label="Fechar Menu">
+        <i class="ri-close-line"></i>
+      </button>
+    </div>
+    <div class="drawer-body">
+      <!-- Busca integrada no Mobile -->
+      <div class="mobile-search-box" onclick="window.location.href='loja.html'">
+        <i class="ri-search-line search-icon"></i>
+        <input type="text" placeholder="Buscar produtos..." readonly>
+      </div>
+      <!-- Links de Navegação -->
+      <ul class="mobile-nav-links">
+        <li><a href="index.html"><i class="ri-home-5-line"></i> Início</a></li>
+        <li><a href="loja.html"><i class="ri-shopping-bag-line"></i> Loja</a></li>
+        <li><a href="index.html#testimonials"><i class="ri-star-line"></i> Avaliações</a></li>
+      </ul>
+      <!-- Informações adicionais / Redes Sociais -->
+      <div class="mobile-menu-footer">
+        <p>Siga-nos nas redes sociais:</p>
+        <div class="social-links">
+          <a href="https://instagram.com" target="_blank" class="social-btn"><i class="ri-instagram-line"></i></a>
+          <a href="https://wa.me/5585999998888" target="_blank" class="social-btn"><i class="ri-whatsapp-line"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- ==========================================
        ANNOUNCEMENT BAR & TICKER
@@ -64,13 +126,14 @@
 
       <!-- Ações do Header (Tema e Carrinho) -->
       <div class="nav-actions">
-        <button id="theme-toggle" class="nav-btn" aria-label="Alternar Tema Claro/Escuro">
-          <i class="ri-sun-line" id="theme-icon"></i>
-        </button>
-        
         <button id="cart-toggle" class="nav-btn" aria-label="Abrir Carrinho de Compras">
           <i class="ri-shopping-bag-line"></i>
           <span id="cart-badge-count" class="cart-count">0</span>
+        </button>
+
+        <!-- Botão Menu Hamburguer (Visível apenas no mobile) -->
+        <button id="mobile-menu-toggle" class="mobile-menu-toggle nav-btn" aria-label="Abrir Menu de Navegação">
+          <i class="ri-menu-line"></i>
         </button>
       </div>
     </div>
@@ -84,21 +147,40 @@
        ========================================== -->
   <main class="container" style="padding-top: 40px; padding-bottom: 80px;">
     
-    <div style="border-bottom:1px solid rgba(255,255,255,0.06); padding-bottom:20px; margin-bottom: 30px;">
+    <div style="border-bottom:1px solid rgba(255,255,255,0.06); padding-bottom:20px; margin-bottom: 30px; text-align: center;">
       <h1 style="font-size: 2.25rem; font-weight: 800; letter-spacing: -0.03em;"><i class="ri-wallet-3-line" style="color:var(--brand-blue);"></i> Finalizar sua Compra</h1>
-      <p style="color:var(--text-secondary); margin-top: 4px;">Preencha seus dados de entrega e selecione a melhor forma de pagamento abaixo.</p>
+      <p style="color:var(--text-secondary); margin-top: 4px;">Preencha suas informações nas etapas abaixo para concluir seu pedido.</p>
     </div>
 
-    <div class="checkout-layout">
+    <div class="checkout-steps-container">
       
-      <!-- Lado Esquerdo: Formulário de Cadastro e Escolha de Pagamento -->
-      <section style="display:flex; flex-direction:column; gap:30px;">
+      <!-- Barra de Progresso Visual (Step Progress Wizard) -->
+      <div class="step-progress-bar">
+        <div class="step-progress-line" id="step-progress-line"></div>
+        <div class="step-node active" id="node-1" onclick="goToStep(1)">
+          <div class="step-number">1</div>
+          <div class="step-title">Contato</div>
+        </div>
+        <div class="step-node" id="node-2" onclick="goToStep(2)">
+          <div class="step-number">2</div>
+          <div class="step-title">Endereço</div>
+        </div>
+        <div class="step-node" id="node-3" onclick="goToStep(3)">
+          <div class="step-number">3</div>
+          <div class="step-title">Resumo</div>
+        </div>
+        <div class="step-node" id="node-4" onclick="goToStep(4)">
+          <div class="step-number">4</div>
+          <div class="step-title">Pagamento</div>
+        </div>
+      </div>
+
+      <form id="checkout-main-form">
         
-        <form id="checkout-main-form">
-          
-          <!-- Seção de Dados de Envio -->
-          <div class="checkout-box" style="margin-bottom:30px;">
-            <h2 class="checkout-box-title"><i class="ri-map-pin-user-line"></i> 1. Dados para Entrega</h2>
+        <!-- ETAPA 1: CONTATO -->
+        <div class="step-panel active" id="step-panel-1">
+          <div class="checkout-box">
+            <h2 class="checkout-box-title"><i class="ri-user-line"></i> 1. Identificação</h2>
             
             <div class="delivery-form">
               <div class="form-group">
@@ -109,7 +191,22 @@
                 <label class="form-label" for="ch-phone">WhatsApp para Contato *</label>
                 <input type="tel" id="ch-phone" required placeholder="Ex: (85) 99999-9999">
               </div>
-              <div class="form-group" style="display: grid; grid-template-columns: 2.5fr 1fr; gap: 16px;">
+            </div>
+
+            <div class="btn-navigation-row">
+              <div></div> <!-- Alinha botão avançar na direita -->
+              <button type="button" class="btn-next" onclick="nextStep()">Avançar para o Endereço <i class="ri-arrow-right-line"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ETAPA 2: ENDEREÇO DE ENTREGA -->
+        <div class="step-panel" id="step-panel-2">
+          <div class="checkout-box">
+            <h2 class="checkout-box-title"><i class="ri-map-pin-line"></i> 2. Endereço de Entrega</h2>
+            
+            <div class="delivery-form">
+              <div class="form-group grid-rua-numero">
                 <div>
                   <label class="form-label" for="ch-rua">Rua/Avenida *</label>
                   <input type="text" id="ch-rua" required placeholder="Ex: Av. Beira Mar">
@@ -119,7 +216,7 @@
                   <input type="text" id="ch-numero" required placeholder="Nº">
                 </div>
               </div>
-              <div class="form-group" style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 16px;">
+              <div class="form-group grid-bairro-cidade">
                 <div>
                   <label class="form-label" for="ch-bairro">Bairro *</label>
                   <input type="text" id="ch-bairro" required placeholder="Digite seu bairro">
@@ -134,16 +231,84 @@
                 <textarea id="ch-obs" rows="2" placeholder="Ex: Ponto de referência, observações de tamanho..."></textarea>
               </div>
             </div>
-          </div>
 
-          <!-- Seção de Pagamento Interativo -->
+            <div class="btn-navigation-row">
+              <button type="button" class="btn-prev" onclick="prevStep()"><i class="ri-arrow-left-line"></i> Voltar</button>
+              <button type="button" class="btn-next" onclick="nextStep()">Avançar <i class="ri-arrow-right-line"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ETAPA 3: RESUMO DA COMPRA & CUPOM -->
+        <div class="step-panel" id="step-panel-3">
+          <div class="checkout-box" style="margin-bottom:30px;">
+            <h2 class="checkout-box-title"><i class="ri-shopping-bag-3-line"></i> 3. Resumo da Compra</h2>
+            
+            <div class="summary-table-container">
+              <table class="summary-table">
+                <thead>
+                  <tr>
+                    <th colspan="2">Produto</th>
+                    <th>Tamanho</th>
+                    <th style="text-align: center;">Quantidade</th>
+                    <th style="text-align: right;">Total</th>
+                  </tr>
+                </thead>
+                <tbody id="checkout-summary-table-body">
+                  <!-- Inserido dinamicamente via JS -->
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Cupom de Desconto -->
+            <div style="margin-top: 24px; border-top: 1px solid rgba(255,255,255,0.06); padding-top:24px;">
+              <h3 style="font-size:0.9rem; font-weight:700; text-transform:uppercase; color:var(--text-secondary); margin-bottom:12px;">Possui Cupom de Desconto?</h3>
+              <div class="coupon-box">
+                <input type="text" id="coupon-code-input" class="coupon-input" placeholder="Ex: MEIRELES10">
+                <button type="button" class="btn-apply-coupon" id="btn-apply-coupon-btn" onclick="handleApplyCoupon()">Aplicar</button>
+              </div>
+              <div id="coupon-status-msg" class="coupon-message"></div>
+            </div>
+
+            <!-- Tabela de Totais Gerais -->
+            <div style="border-top:1px solid rgba(255,255,255,0.06); padding-top:20px;">
+              <div style="display:flex; justify-content:space-between; margin-bottom:12px; font-size:0.95rem; color:var(--text-secondary);">
+                <span>Subtotal:</span>
+                <span id="checkout-subtotal">R$ 0,00</span>
+              </div>
+              <div style="display:flex; justify-content:space-between; margin-bottom:12px; font-size:0.95rem; color:var(--text-secondary); display: none;" id="checkout-discount-row">
+                <span>Desconto aplicado:</span>
+                <span id="checkout-discount" class="discount-row">- R$ 0,00</span>
+              </div>
+              <div style="display:flex; justify-content:space-between; margin-bottom:16px; font-size:0.95rem; color:var(--text-secondary);">
+                <span>Frete:</span>
+                <span id="checkout-shipping">R$ 15,00</span>
+              </div>
+              <div style="display:flex; justify-content:space-between; border-top:1px solid rgba(255,255,255,0.06); padding-top:16px; font-size:1.35rem; font-weight:800;">
+                <span>Total Geral:</span>
+                <span id="checkout-total" style="color:var(--brand-yellow);">R$ 0,00</span>
+              </div>
+            </div>
+
+            <div class="btn-navigation-row">
+              <button type="button" class="btn-prev" onclick="prevStep()"><i class="ri-arrow-left-line"></i> Voltar</button>
+              <button type="button" class="btn-next" onclick="nextStep()">Confirmar <i class="ri-arrow-right-line"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ETAPA 4: FORMA DE PAGAMENTO -->
+        <div class="step-panel" id="step-panel-4">
           <div class="checkout-box">
-            <h2 class="checkout-box-title"><i class="ri-secure-payment-line"></i> 2. Forma de Pagamento</h2>
+            <h2 class="checkout-box-title"><i class="ri-secure-payment-line"></i> 4. Forma de Pagamento</h2>
             
             <!-- Abas do Seletor de Pagamento -->
             <div class="payment-tabs">
               <button type="button" class="payment-tab-btn active" data-method="pix">
-                <i class="ri-pix-fill"></i> PIX
+                <svg viewBox="0 0 135 135" width="20" height="20" fill="currentColor" style="margin-bottom: 4px;">
+                  <path d="M60.1 113.8c4.1 4.1 10.7 4.1 14.8 0L121 67.7c4.1-4.1 4.1-10.7 0-14.8L74.9 6.8c-4.1-4.1-10.7-4.1-14.8 0L14 52.9c-4.1 4.1-4.1 10.7 0 14.8l46.1 46.1zm17.9-93.5l45.4 45.4-45.4 45.4-45.4-45.4 45.4-45.4z" />
+                  <path d="M67.5 45.4c-12.2 0-22.1 9.9-22.1 22.1s9.9 22.1 22.1 22.1 22.1-9.9 22.1-22.1-9.9-22.1-22.1-22.1zm0 34.2c-6.7 0-12.1-5.4-12.1-12.1S60.8 55.4 67.5 55.4 79.6 60.8 79.6 67.5 74.2 79.6 67.5 79.6z" />
+                </svg> PIX
               </button>
               <button type="button" class="payment-tab-btn" data-method="card">
                 <i class="ri-bank-card-line"></i> Cartão
@@ -245,49 +410,21 @@
                 </p>
               </div>
             </div>
+            
+            <!-- Aviso de Segurança -->
+            <div style="display:flex; align-items:center; gap:10px; margin-top:30px; color:var(--text-muted); font-size:0.75rem;">
+              <i class="ri-lock-line" style="font-size:1.2rem; color:var(--brand-green); flex-shrink:0;"></i>
+              <span>Checkout 100% Seguro. Suas informações de cartão são simuladas em ambiente local de alta segurança e nunca salvas no servidor.</span>
+            </div>
 
-          </div>
-
-          <!-- Botão para Submissão do Form e Fechamento no WhatsApp -->
-          <button type="submit" class="btn-checkout" style="margin-top: 30px; width:100%; height:54px; font-size:1.05rem; cursor:pointer;" aria-label="Confirmar e Finalizar Pedido no WhatsApp">
-            <i class="ri-whatsapp-line"></i> Confirmar Pedido no WhatsApp
-          </button>
-
-        </form>
-
-      </section>
-
-      <!-- Lado Direito: Resumo de Produtos e Totais -->
-      <aside class="checkout-box" style="height: fit-content;">
-        <h2 class="checkout-box-title"><i class="ri-shopping-bag-3-line"></i> Resumo da Compra</h2>
-        
-        <!-- Itens do Carrinho de Checkout -->
-        <div id="checkout-summary-items" style="max-height: 380px; overflow-y: auto; margin-bottom: 24px; padding-right:6px;">
-          <!-- Injetado dinamicamente via script.js -->
-        </div>
-
-        <!-- Totais de Pagamento -->
-        <div style="border-top:1px solid rgba(255,255,255,0.06); padding-top:20px;">
-          <div style="display:flex; justify-content:space-between; margin-bottom:10px; font-size:0.95rem; color:var(--text-secondary);">
-            <span>Subtotal:</span>
-            <span id="checkout-subtotal">R$ 0,00</span>
-          </div>
-          <div style="display:flex; justify-content:space-between; margin-bottom:14px; font-size:0.95rem; color:var(--text-secondary);">
-            <span>Frete:</span>
-            <span id="checkout-shipping">R$ 15,00</span>
-          </div>
-          <div style="display:flex; justify-content:space-between; border-top:1px solid rgba(255,255,255,0.06); padding-top:14px; font-size:1.35rem; font-weight:800;">
-            <span>Total Geral:</span>
-            <span id="checkout-total" style="color:var(--brand-yellow);">R$ 0,00</span>
+            <div class="btn-navigation-row">
+              <button type="button" class="btn-prev" onclick="prevStep()"><i class="ri-arrow-left-line"></i> Voltar</button>
+              <button type="submit" class="btn-next"><i class="ri-whatsapp-line"></i> Confirmar Pedido</button>
+            </div>
           </div>
         </div>
 
-        <!-- Aviso de Segurança -->
-        <div style="display:flex; align-items:center; gap:10px; margin-top:30px; color:var(--text-muted); font-size:0.75rem;">
-          <i class="ri-lock-line" style="font-size:1.2rem; color:var(--brand-green);"></i>
-          <span>Checkout 100% Seguro. Suas informações de cartão são simuladas em ambiente local de alta segurança e nunca salvas no servidor.</span>
-        </div>
-      </aside>
+      </form>
 
     </div>
 
@@ -327,43 +464,6 @@
           <a href="#" class="social-btn" aria-label="Curta no Facebook"><i class="ri-facebook-circle-line"></i></a>
         </div>
       </div>
-
-      <div>
-        <h3 class="footer-col-title">Categorias</h3>
-        <ul class="footer-links">
-          <li><a href="loja.html?cat=times">Camisas de Time</a></li>
-          <li><a href="loja.html?cat=streetwear">Streetwear</a></li>
-          <li><a href="loja.html?cat=moda">Moda Casual</a></li>
-          <li><a href="loja.html">Novos Lançamentos</a></li>
-        </ul>
-      </div>
-
-      <div>
-        <h3 class="footer-col-title">Institucional</h3>
-        <ul class="footer-links">
-          <li><a href="index.html#testimonials">Avaliações de Clientes</a></li>
-          <li><a href="#">Política de Trocas</a></li>
-          <li><a href="#">Termos de Uso</a></li>
-        </ul>
-      </div>
-
-      <div>
-        <h3 class="footer-col-title">Atendimento</h3>
-        <div class="footer-contact-info">
-          <div class="contact-info-item">
-            <i class="ri-map-pin-2-line"></i>
-            <p>Av. Principal Varejista, 1200 - Centro, Fortaleza - CE</p>
-          </div>
-          <div class="contact-info-item">
-            <i class="ri-whatsapp-line"></i>
-            <p>(85) 99999-8888<br><span style="font-size: 0.75rem; color: var(--text-muted);">Seg a Sáb - 9h às 19h</span></p>
-          </div>
-          <div class="contact-info-item">
-            <i class="ri-mail-line"></i>
-            <p>contato@meirelesmodas.com.br</p>
-          </div>
-        </div>
-      </div>
     </div>
 
     <div class="container footer-bottom">
@@ -392,7 +492,7 @@
         <i class="ri-shopping-bag-3-line cart-empty-icon"></i>
         <h4 style="font-size: 1.15rem; font-weight: 700; color: var(--text-primary);">Seu carrinho está vazio</h4>
         <p style="font-size: 0.85rem; max-width: 250px;">Adicione produtos de nosso catálogo e garanta frete grátis!</p>
-        <button class="btn-secondary" onclick="closeCart()" style="margin-top: 10px; width: 100%;">Continuar Navegando</button>
+        <button class="btn-secondary" onclick="closeCart()" style="margin-top: 12px; width: auto; max-width: max-content;">Continuar Navegando</button>
       </div>
 
       <div class="cart-items-list" id="cart-items-list">
